@@ -14,18 +14,13 @@ namespace libtests.Parsing
 		{
 			string source = @"I am amazing.";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "I am amazing."
-			});
+			var expected = new TokenListBuilder()
+				.String(0, 0, "I am amazing.");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion One line
 
@@ -36,29 +31,15 @@ namespace libtests.Parsing
 			string source = @"I am amazing.
 And everyone knows it :)";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "I am amazing."
-			});
-			expected.Add(new Token() {
-				Column = 13,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "And everyone knows it :)"
-			});
+			var expected = new TokenListBuilder()
+				.String(0, 0, "I am amazing.")
+					.Newline(0, 13)
+					.String(1, 0, "And everyone knows it :)");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Multiple lines
 	}
