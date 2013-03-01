@@ -8,9 +8,9 @@ namespace libtests.Parsing
 	[TestFixture]
 	public class LinkTests
 	{
-		#region Start text, one link, no title
+		#region Start text, one link
 		[Test]
-		public void StartText_OneLink_Http_NoTitle()
+		public void StartText_OneLink_Http()
 		{
 			string source = @"[A link](http://domain.tld/folder/file.ext) in a text";
 
@@ -24,11 +24,11 @@ namespace libtests.Parsing
 
 			CollectionAssert.AreEqual(expected.List, actual);
 		}
-		#endregion Start text, one link, no title
+		#endregion Start text, one link
 
-		#region Mid text, one link, no title
+		#region Mid text, one link
 		[Test]
-		public void MidText_OneLink_Http_NoTitle()
+		public void MidText_OneLink_Http()
 		{
 			string source = @"This is a text about [a link](http://domain.tld/folder/file.ext) in a text";
 
@@ -43,11 +43,11 @@ namespace libtests.Parsing
 
 			CollectionAssert.AreEqual(expected.List, actual);
 		}
-		#endregion Mid text, one link, no title
+		#endregion Mid text, one link
 
-		#region End text, one link, no title
+		#region End text, one link
 		[Test]
-		public void EndText_OneLink_Http_NoTitle()
+		public void EndText_OneLink_Http()
 		{
 			string source = @"This is a text with [a link](http://domain.tld/folder/file.ext)";
 
@@ -61,6 +61,6 @@ namespace libtests.Parsing
 
 			CollectionAssert.AreEqual(expected.List, actual);
 		}
-		#endregion End text, one link, no title
+		#endregion End text, one link
 	}
 }
