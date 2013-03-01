@@ -59,5 +59,6 @@
     <Compile Include="Parsing\BlockquoteTests.cs" />
     <Compile Include="Parsing\StringTests.cs" />
     <Compile Include="Parsing\UnorderedListTests.cs" />
+    <Compile Include="Parsing\OrderedListTests.cs" />
   </ItemGroup>
 </Project>

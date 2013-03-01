@@ -23,6 +23,7 @@ namespace PenguinSyntax.Parsing
 
 		Blockquote = 7,
 
-		UnorderedList = 8
+		UnorderedList = 8,
+		OrderedList = 9
 	}
 }

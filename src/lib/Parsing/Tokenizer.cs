@@ -119,6 +119,15 @@ namespace PenguinSyntax.Parsing
 				}
 
 				//
+				// ordered list
+				//
+				if (Char.IsDigit(cur) && (Char.IsDigit(next) || next == '.'))
+				{
+					tokens.Add(this.GetOrderedList());
+					continue;
+				}
+
+				//
 				// if we get this far, we must be
 				// looking at a string
 				//
@@ -245,6 +254,33 @@ namespace PenguinSyntax.Parsing
 			throw new PenguinSyntaxException("I was not able to find the end of the header type");
 		}
 		#endregion Get oneline header type
+
+		#region Get ordered list
+		private Token GetOrderedList()
+		{
+			Token t = new Token() {
+				Column = this.column,
+				LineNumber = this.linenumber,
+				Type = TokenType.OrderedList
+			};
+
+			char cur = '\0';
+			while (this.globalposition < this.source.Length)
+			{
+				cur = this.source[this.globalposition];
+
+				if (cur == '.')
+				{
+					return t;
+				}
+
+				this.globalposition++;
+				this.column++;
+			}
+
+			throw new PenguinSyntaxException("I was unable to find the end of the ordered list item index. They have the format '123.'.");
+		}
+		#endregion Get ordered list
 	}
 }
 
