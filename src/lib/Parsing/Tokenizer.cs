@@ -80,6 +80,19 @@ namespace PenguinSyntax.Parsing
 				}
 
 				//
+				// blockquote
+				//
+				if (cur == '>')
+				{
+					tokens.Add(new Token() {
+						Column = this.column,
+						LineNumber = this.linenumber,
+						Type = TokenType.Blockquote
+					});
+					continue;
+				}
+
+				//
 				// if we get this far, we must be
 				// looking at a string
 				//
