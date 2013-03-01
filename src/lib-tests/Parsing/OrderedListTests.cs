@@ -119,5 +119,26 @@ namespace libtests.Parsing
 			CollectionAssert.AreEqual(expected, actual);
 		}
 		#endregion 1 item
+
+		#region Accidental ordered list
+		[Test]
+		public void AccidentalOrderedList()
+		{
+			string source = @"1987\. What a great year to be born.";
+
+			List<Token> expected = new List<Token>();
+			expected.Add(new Token() {
+				Column = 0,
+				LineNumber = 0,
+				Type = TokenType.String,
+				Content = "1987. What a great year to be born."
+			});
+
+			Tokenizer nizer = new Tokenizer();
+			List<Token> actual = nizer.Tokenize(source);
+
+			CollectionAssert.AreEqual(expected, actual);
+		}
+		#endregion Accidental ordered list
 	}
 }

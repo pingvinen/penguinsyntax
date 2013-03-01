@@ -1,10 +1,29 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace PenguinSyntax.Parsing
 {
 	public class Tokenizer
 	{
+		#region Escapable characters
+		private IDictionary<char, bool> escapableChars = new Dictionary<char, bool>() {
+			{'\\', true},
+			{'`', true},
+			{'*', true},
+			{'_', true},
+			{'{', true},
+			{'}', true},
+			{'[', true},
+			{']', true},
+			{'#', true},
+			{'+', true},
+			{'-', true},
+			{'.', true},
+			{'!', true}
+		};
+		#endregion Escapable characters
+
 		public Tokenizer()
 		{
 		}
@@ -123,7 +142,16 @@ namespace PenguinSyntax.Parsing
 				//
 				if (Char.IsDigit(cur) && (Char.IsDigit(next) || next == '.'))
 				{
-					tokens.Add(this.GetOrderedList());
+					var tmp = this.GetOrderedList();
+
+					if (tmp == null)
+					{
+						// this was an accidental list
+						tokens.Add(this.GetString());
+						continue;
+					}
+
+					tokens.Add(tmp);
 					continue;
 				}
 
@@ -161,18 +189,20 @@ namespace PenguinSyntax.Parsing
 				Type = TokenType.String
 			};
 
-			int start = -1;
-			int substringlength = 0;
+			StringBuilder sb = new StringBuilder();
 
 			char cur = '\0';
+			char next = '\0';
 			while (this.globalposition < this.source.Length)
 			{
 				cur = this.source[this.globalposition];
+				next = this.Lookahead();
 
-				// skip spaces at the beginning
-				if (start == -1 && cur != ' ')
+				if (cur == '\\' && this.escapableChars.ContainsKey(next))
 				{
-					start = this.globalposition;
+					this.globalposition++;
+					this.column++;
+					continue;
 				}
 
 				else if (cur == '\n' || (this.globalposition == this.source.Length-1))
@@ -186,17 +216,17 @@ namespace PenguinSyntax.Parsing
 					else
 					{
 						// if end-of-source is the reason we are stopping,
-						// then we need to increase the substring
-						substringlength++;
+						// then we need to add the current character
+						sb.Append(cur);
 					}
 
-					t.Content = this.source.Substring(start, substringlength);
+					t.Content = sb.ToString();
 					return t;
 				}
 
+				sb.Append(cur);
 				this.globalposition++;
 				this.column++;
-				substringlength++;
 			}
 
 			throw new PenguinSyntaxException("I was not able to find the end of the string");
@@ -264,6 +294,9 @@ namespace PenguinSyntax.Parsing
 				Type = TokenType.OrderedList
 			};
 
+			int originalGlobal = this.globalposition;
+			int originalColumn = this.column;
+
 			char cur = '\0';
 			while (this.globalposition < this.source.Length)
 			{
@@ -272,6 +305,14 @@ namespace PenguinSyntax.Parsing
 				if (cur == '.')
 				{
 					return t;
+				}
+
+				else if (cur == '\\')
+				{
+					// oh shit... abort abort
+					this.globalposition = originalGlobal;
+					this.column = originalColumn;
+					return null;
 				}
 
 				this.globalposition++;
