@@ -24,6 +24,11 @@ namespace PenguinSyntax.Parsing
 		Blockquote = 7,
 
 		UnorderedList = 8,
-		OrderedList = 9
+		OrderedList = 9,
+
+		CodeOpen = 10,
+		CodeClose = 11,
+
+		Verbatim = 12
 	}
 }

@@ -60,5 +60,6 @@
     <Compile Include="Parsing\StringTests.cs" />
     <Compile Include="Parsing\UnorderedListTests.cs" />
     <Compile Include="Parsing\OrderedListTests.cs" />
+    <Compile Include="Parsing\CodeBlockTests.cs" />
   </ItemGroup>
 </Project>
