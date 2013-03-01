@@ -108,6 +108,102 @@ namespace libtests.Parsing
 		}
 		#endregion Nested, one line
 
+		#region Nested, with spaces, one line
+		[Test]
+		public void Nested_WithSpaces_OneLine()
+		{
+			string source = @"> >   > something quoted";
+
+			List<Token> expected = new List<Token>();
+			expected.Add(new Token() {
+				Column = 0,
+				LineNumber = 0,
+				Type = TokenType.Blockquote
+			});
+			expected.Add(new Token() {
+				Column = 2,
+				LineNumber = 0,
+				Type = TokenType.Blockquote
+			});
+			expected.Add(new Token() {
+				Column = 6,
+				LineNumber = 0,
+				Type = TokenType.Blockquote
+			});
+			expected.Add(new Token() {
+				Column = 8,
+				LineNumber = 0,
+				Type = TokenType.String,
+				Content = "something quoted"
+			});
+
+			Tokenizer nizer = new Tokenizer();
+			List<Token> actual = nizer.Tokenize(source);
+
+			CollectionAssert.AreEqual(expected, actual);
+		}
+		#endregion Nested, with spaces, one line
+
+		#region Mixed nesting
+		[Test]
+		public void MixedNesting()
+		{
+			string source = @">> something quoted
+> more recent quote
+And this is now";
+
+			List<Token> expected = new List<Token>();
+			expected.Add(new Token() {
+				Column = 0,
+				LineNumber = 0,
+				Type = TokenType.Blockquote
+			});
+			expected.Add(new Token() {
+				Column = 1,
+				LineNumber = 0,
+				Type = TokenType.Blockquote
+			});
+			expected.Add(new Token() {
+				Column = 3,
+				LineNumber = 0,
+				Type = TokenType.String,
+				Content = "something quoted"
+			});
+			expected.Add(new Token() {
+				Column = 19,
+				LineNumber = 0,
+				Type = TokenType.Newline
+			});
+			expected.Add(new Token() {
+				Column = 0,
+				LineNumber = 1,
+				Type = TokenType.Blockquote
+			});
+			expected.Add(new Token() {
+				Column = 2,
+				LineNumber = 1,
+				Type = TokenType.String,
+				Content = "more recent quote"
+			});
+			expected.Add(new Token() {
+				Column = 19,
+				LineNumber = 1,
+				Type = TokenType.Newline
+			});
+			expected.Add(new Token() {
+				Column = 0,
+				LineNumber = 2,
+				Type = TokenType.String,
+				Content = "And this is now"
+			});
+
+			Tokenizer nizer = new Tokenizer();
+			List<Token> actual = nizer.Tokenize(source);
+
+			CollectionAssert.AreEqual(expected, actual);
+		}
+		#endregion Mixed nesting
+
 		#region One line, no text
 		[Test]
 		public void OneLine_NoText()
