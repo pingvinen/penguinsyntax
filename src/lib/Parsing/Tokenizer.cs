@@ -25,11 +25,13 @@ namespace PenguinSyntax.Parsing
 			this.column = -1;
 
 			char cur = '\0';
+			char next = '\0';
 			while (this.globalposition < this.source.Length-1)
 			{
 				this.globalposition++;
 				this.column++;
 				cur = this.source[this.globalposition];
+				next = this.Lookahead();
 
 				//
 				// newlines
@@ -71,7 +73,7 @@ namespace PenguinSyntax.Parsing
 				//
 				// line
 				//
-				if (cur == '-')
+				if (cur == '-' && (next == '-' || next == '\n' || next == '\0'))
 				{
 					tokens.Add(new Token() {
 						Column = this.column,
@@ -104,6 +106,19 @@ namespace PenguinSyntax.Parsing
 				}
 
 				//
+				// unordered list
+				//
+				if (cur == '*' || cur == '+' || cur == '-')
+				{
+					tokens.Add(new Token() {
+						Column = this.column,
+						LineNumber = this.linenumber,
+						Type = TokenType.UnorderedList
+					});
+					continue;
+				}
+
+				//
 				// if we get this far, we must be
 				// looking at a string
 				//
@@ -113,6 +128,20 @@ namespace PenguinSyntax.Parsing
 			return tokens;
 		}
 		#endregion Tokenize
+
+		#region Lookahead
+		private char Lookahead()
+		{
+			int nextPos = this.globalposition + 1;
+
+			if (nextPos < this.source.Length)
+			{
+				return this.source[nextPos];
+			}
+
+			return '\0';
+		}
+		#endregion Lookahead
 
 		#region Get string
 		private Token GetString()

@@ -21,6 +21,8 @@ namespace PenguinSyntax.Parsing
 		Header2 = 5,
 		Header3 = 6,
 
-		Blockquote = 7
+		Blockquote = 7,
+
+		UnorderedList = 8
 	}
 }

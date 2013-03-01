@@ -58,5 +58,6 @@
     <Compile Include="Parsing\OneLineHeaderTests.cs" />
     <Compile Include="Parsing\BlockquoteTests.cs" />
     <Compile Include="Parsing\StringTests.cs" />
+    <Compile Include="Parsing\UnorderedListTests.cs" />
   </ItemGroup>
 </Project>
