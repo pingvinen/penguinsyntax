@@ -44,12 +44,28 @@ namespace PenguinSyntax.Parsing
 					continue;
 				}
 
+				//
+				// strong line
+				//
 				if (cur == '=')
 				{
 					tokens.Add(new Token() {
 						Column = this.column,
 						LineNumber = this.linenumber,
 						Type = TokenType.StrongLine
+					});
+					continue;
+				}
+
+				//
+				// line
+				//
+				if (cur == '-')
+				{
+					tokens.Add(new Token() {
+						Column = this.column,
+						LineNumber = this.linenumber,
+						Type = TokenType.Line
 					});
 					continue;
 				}

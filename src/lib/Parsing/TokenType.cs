@@ -10,6 +10,11 @@ namespace PenguinSyntax.Parsing
 		/// <summary>
 		/// Represents "="
 		/// </summary>
-		StrongLine = 2
+		StrongLine = 2,
+
+		/// <summary>
+		/// Represents "-"
+		/// </summary>
+		Line = 3
 	}
 }

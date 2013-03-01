@@ -52,7 +52,8 @@
     <Folder Include="Parsing\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parsing\HeaderTests.cs" />
     <Compile Include="Parsing\TokenTests.cs" />
+    <Compile Include="Parsing\UnderlinedHeaderOneTests.cs" />
+    <Compile Include="Parsing\UnderlinedHeaderTwoTests.cs" />
   </ItemGroup>
 </Project>

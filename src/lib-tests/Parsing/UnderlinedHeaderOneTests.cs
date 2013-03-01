@@ -5,11 +5,11 @@ using PenguinSyntax.Parsing;
 namespace libtests.Parsing
 {
 	[TestFixture]
-	public class HeaderTests
+	public class UnderlinedHeaderOneTests
 	{
-		#region Underlined header1: two lines valid
+		#region two lines valid
 		[Test]
-		public void UnderlinedH1_TwoLines_Valid()
+		public void TwoLines_Valid()
 		{
 			string source = @"Header1
 =======";
@@ -66,11 +66,11 @@ namespace libtests.Parsing
 			List<Token> actual = nizer.Tokenize(source);
 			CollectionAssert.AreEqual(expected, actual);
 		}
-		#endregion Underlined header1: two lines valid
+		#endregion two lines valid
 
-		#region Underlined header1: three lines, newline after, valid
+		#region three lines, newline after, valid
 		[Test]
-		public void UnderlinedH1_ThreeLines_NewlineAfter_Valid()
+		public void ThreeLines_NewlineAfter_Valid()
 		{
 			string source = @"Header1
 =======
@@ -133,11 +133,11 @@ namespace libtests.Parsing
 			List<Token> actual = nizer.Tokenize(source);
 			CollectionAssert.AreEqual(expected, actual);
 		}
-		#endregion Underlined header1: three lines, newline after, valid
+		#endregion three lines, newline after, valid
 
-		#region Underlined header1: three lines, newline before, valid
+		#region three lines, newline before, valid
 		[Test]
-		public void UnderlinedH1_ThreeLines_NewlineBefore_Valid()
+		public void ThreeLines_NewlineBefore_Valid()
 		{
 			string source = @"
 Header1
@@ -200,11 +200,11 @@ Header1
 			List<Token> actual = nizer.Tokenize(source);
 			CollectionAssert.AreEqual(expected, actual);
 		}
-		#endregion Underlined header1: three lines, newline before, valid
+		#endregion three lines, newline before, valid
 
-		#region Underlined header1: four lines, newline before and after, valid
+		#region four lines, newline before and after, valid
 		[Test]
-		public void UnderlinedH1_FourLines_NewlineBeforeAndAfter_Valid()
+		public void FourLines_NewlineBeforeAndAfter_Valid()
 		{
 			string source = @"
 Header1
@@ -274,6 +274,6 @@ Header1
 			List<Token> actual = nizer.Tokenize(source);
 			CollectionAssert.AreEqual(expected, actual);
 		}
-		#endregion Underlined header1: four lines, newline before and after, valid
+		#endregion four lines, newline before and after, valid
 	}
 }
