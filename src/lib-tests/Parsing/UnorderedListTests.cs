@@ -14,23 +14,14 @@ namespace libtests.Parsing
 		{
 			string source = @"* Item";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Item"
-			});
+			var expected = new TokenListBuilder()
+				.UnorderedList(0, 0)
+					.String(0, 2, "Item");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Star: 1 item
 
@@ -42,55 +33,20 @@ namespace libtests.Parsing
 * Item 2
 * Item 3";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Item 1"
-			});
-			expected.Add(new Token() {
-				Column = 8,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "Item 2"
-			});
-			expected.Add(new Token() {
-				Column = 8,
-				LineNumber = 1,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 2,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 2,
-				Type = TokenType.String,
-				Content = "Item 3"
-			});
+			var expected = new TokenListBuilder()
+				.UnorderedList(0, 0)
+					.String(0, 2, "Item 1")
+					.Newline(0, 8)
+					.UnorderedList(1, 0)
+					.String(1, 2, "Item 2")
+					.Newline(1, 8)
+					.UnorderedList(2, 0)
+					.String(2, 2, "Item 3");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Star: 3 items
 	
@@ -100,23 +56,14 @@ namespace libtests.Parsing
 		{
 			string source = @"+ Item";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Item"
-			});
+			var expected = new TokenListBuilder()
+				.UnorderedList(0, 0)
+					.String(0, 2, "Item");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Plus: 1 item
 
@@ -128,55 +75,20 @@ namespace libtests.Parsing
 + Item 2
 + Item 3";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Item 1"
-			});
-			expected.Add(new Token() {
-				Column = 8,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "Item 2"
-			});
-			expected.Add(new Token() {
-				Column = 8,
-				LineNumber = 1,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 2,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 2,
-				Type = TokenType.String,
-				Content = "Item 3"
-			});
+			var expected = new TokenListBuilder()
+				.UnorderedList(0, 0)
+					.String(0, 2, "Item 1")
+					.Newline(0, 8)
+					.UnorderedList(1, 0)
+					.String(1, 2, "Item 2")
+					.Newline(1, 8)
+					.UnorderedList(2, 0)
+					.String(2, 2, "Item 3");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Plus: 3 items
 
@@ -186,23 +98,14 @@ namespace libtests.Parsing
 		{
 			string source = @"- Item";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Item"
-			});
+			var expected = new TokenListBuilder()
+				.UnorderedList(0, 0)
+					.String(0, 2, "Item");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Minus: 1 item
 
@@ -214,55 +117,20 @@ namespace libtests.Parsing
 - Item 2
 - Item 3";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Item 1"
-			});
-			expected.Add(new Token() {
-				Column = 8,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "Item 2"
-			});
-			expected.Add(new Token() {
-				Column = 8,
-				LineNumber = 1,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 2,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 2,
-				Type = TokenType.String,
-				Content = "Item 3"
-			});
+			var expected = new TokenListBuilder()
+				.UnorderedList(0, 0)
+					.String(0, 2, "Item 1")
+					.Newline(0, 8)
+					.UnorderedList(1, 0)
+					.String(1, 2, "Item 2")
+					.Newline(1, 8)
+					.UnorderedList(2, 0)
+					.String(2, 2, "Item 3");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Minus: 3 items
 
@@ -274,55 +142,20 @@ namespace libtests.Parsing
 * Item 2
 + Item 3";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Item 1"
-			});
-			expected.Add(new Token() {
-				Column = 8,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "Item 2"
-			});
-			expected.Add(new Token() {
-				Column = 8,
-				LineNumber = 1,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 2,
-				Type = TokenType.UnorderedList
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 2,
-				Type = TokenType.String,
-				Content = "Item 3"
-			});
+			var expected = new TokenListBuilder()
+				.UnorderedList(0, 0)
+					.String(0, 2, "Item 1")
+					.Newline(0, 8)
+					.UnorderedList(1, 0)
+					.String(1, 2, "Item 2")
+					.Newline(1, 8)
+					.UnorderedList(2, 0)
+					.String(2, 2, "Item 3");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Mixed: 3 items
 	}

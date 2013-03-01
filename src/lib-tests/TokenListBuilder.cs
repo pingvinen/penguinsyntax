@@ -127,5 +127,14 @@ namespace libtests
 			return this;
 		}
 		#endregion Line
+
+		#region Unordered list
+		public TokenListBuilder UnorderedList(int line, int column)
+		{
+			this.AddToken(TokenType.UnorderedList, line, column);
+			return this;
+		}
+		#endregion Unordered list
+
 	}
 }
