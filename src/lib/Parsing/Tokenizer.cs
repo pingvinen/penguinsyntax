@@ -270,7 +270,7 @@ namespace PenguinSyntax.Parsing
 				this.column++;
 			}
 
-			throw new PenguinSyntaxException("I was not able to find the end of the string");
+			throw new SyntaxException("I was not able to find the end of the string");
 		}
 		#endregion Get string
 
@@ -312,7 +312,7 @@ namespace PenguinSyntax.Parsing
 
 						default:
 						{
-							throw new PenguinSyntaxException("You are only allowed to use between 1 and 3 '#' for headers. You used {0}", headerlvl);
+							throw new SyntaxException("You are only allowed to use between 1 and 3 '#' for headers. You used {0}", headerlvl);
 						}
 					}
 				}
@@ -322,7 +322,7 @@ namespace PenguinSyntax.Parsing
 				headerlvl++;
 			}
 
-			throw new PenguinSyntaxException("I was not able to find the end of the header type");
+			throw new SyntaxException("I was not able to find the end of the header type");
 		}
 		#endregion Get oneline header type
 
@@ -360,7 +360,7 @@ namespace PenguinSyntax.Parsing
 				this.column++;
 			}
 
-			throw new PenguinSyntaxException("I was unable to find the end of the ordered list item index. They have the format '123.'.");
+			throw new SyntaxException("I was unable to find the end of the ordered list item index. They have the format '123.'.");
 		}
 		#endregion Get ordered list
 
@@ -410,7 +410,7 @@ namespace PenguinSyntax.Parsing
 				this.column++;
 			}
 
-			throw new PenguinSyntaxException("I was unable to find the end of the codeblock opening. It should have the format '```' or '```language'.");
+			throw new SyntaxException("I was unable to find the end of the codeblock opening. It should have the format '```' or '```language'.");
 		}
 		#endregion Get codeblock open
 
@@ -454,10 +454,10 @@ namespace PenguinSyntax.Parsing
 					return t;
 				}
 
-				throw new PenguinSyntaxException("Unexpected character '{0}' in codeblock ending. I was expected a tick '`'.", cur);
+				throw new SyntaxException("Unexpected character '{0}' in codeblock ending. I was expected a tick '`'.", cur);
 			}
 
-			throw new PenguinSyntaxException("I was unable to find the end of the codeblock ending. It should have the format '```'.");
+			throw new SyntaxException("I was unable to find the end of the codeblock ending. It should have the format '```'.");
 		}
 		#endregion Get codeblock close
 	}
