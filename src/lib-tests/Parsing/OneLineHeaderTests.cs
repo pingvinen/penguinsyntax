@@ -2,6 +2,7 @@ using System;
 using NUnit.Framework;
 using System.Collections.Generic;
 using PenguinSyntax.Parsing;
+using PenguinSyntax;
 
 namespace libtests.Parsing
 {
@@ -278,5 +279,48 @@ namespace libtests.Parsing
 		}
 		#endregion Header3: newline after, valid
 
+		#region Too many hashes
+		[Test]
+		public void TooManyHashes()
+		{
+			string source = @"#### Header";
+
+			Tokenizer nizer = new Tokenizer();
+
+			try
+			{
+				nizer.Tokenize(source);
+
+				Assert.Fail("A syntax exception should have been thrown");
+			}
+
+			catch (SyntaxException)
+			{
+				// hephey
+			}
+		}
+		#endregion Too many hashes
+
+		#region No text
+		[Test]
+		public void NoText()
+		{
+			string source = @"##";
+
+			Tokenizer nizer = new Tokenizer();
+
+			try
+			{
+				nizer.Tokenize(source);
+
+				Assert.Fail("A syntax exception should have been thrown");
+			}
+
+			catch (SyntaxException)
+			{
+				// hephey
+			}
+		}
+		#endregion NoText
 	}
 }
