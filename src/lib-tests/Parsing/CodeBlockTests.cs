@@ -15,28 +15,15 @@ namespace libtests.Parsing
 			string source = @"```
 ```";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.CodeOpen,
-				Content = "plain"
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.CodeClose
-			});
+			var expected = new TokenListBuilder()
+				.CodeOpen(0, 0, "plain")
+					.Newline(0, 3)
+					.CodeClose(1, 0);
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Empty, no lang
 
@@ -47,28 +34,15 @@ namespace libtests.Parsing
 			string source = @"```javascript
 ```";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.CodeOpen,
-				Content = "javascript"
-			});
-			expected.Add(new Token() {
-				Column = 13,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.CodeClose
-			});
+			var expected = new TokenListBuilder()
+				.CodeOpen(0, 0, "javascript")
+					.Newline(0, 13)
+					.CodeClose(1, 0);
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Empty, with lang
 
@@ -82,61 +56,21 @@ for (var i=0; i<10; i++) {
 }
 ```";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.CodeOpen,
-				Content = "plain"
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.Verbatim,
-				Content = "for (var i=0; i<10; i++) {"
-			});
-			expected.Add(new Token() {
-				Column = 26,
-				LineNumber = 1,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 2,
-				Type = TokenType.Verbatim,
-				Content = "	// do something"
-			});
-			expected.Add(new Token() {
-				Column = 16,
-				LineNumber = 2,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 3,
-				Type = TokenType.Verbatim,
-				Content = "}"
-			});
-			expected.Add(new Token() {
-				Column = 1,
-				LineNumber = 3,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 4,
-				Type = TokenType.CodeClose
-			});
+			var expected = new TokenListBuilder()
+				.CodeOpen(0, 0, "plain")
+					.Newline(0, 3)
+					.Verbatim(1, 0, "for (var i=0; i<10; i++) {")
+					.Newline(1, 26)
+					.Verbatim(2, 0, "\t// do something")
+					.Newline(2, 16)
+					.Verbatim(3, 0, "}")
+					.Newline(3, 1)
+					.CodeClose(4, 0);
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion js loop, no lang
 
@@ -150,61 +84,21 @@ for (var i=0; i<10; i++) {
 }
 ```";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.CodeOpen,
-				Content = "javascript"
-			});
-			expected.Add(new Token() {
-				Column = 13,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.Verbatim,
-				Content = "for (var i=0; i<10; i++) {"
-			});
-			expected.Add(new Token() {
-				Column = 26,
-				LineNumber = 1,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 2,
-				Type = TokenType.Verbatim,
-				Content = "	// do something"
-			});
-			expected.Add(new Token() {
-				Column = 16,
-				LineNumber = 2,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 3,
-				Type = TokenType.Verbatim,
-				Content = "}"
-			});
-			expected.Add(new Token() {
-				Column = 1,
-				LineNumber = 3,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 4,
-				Type = TokenType.CodeClose
-			});
+			var expected = new TokenListBuilder()
+				.CodeOpen(0, 0, "javascript")
+					.Newline(0, 13)
+					.Verbatim(1, 0, "for (var i=0; i<10; i++) {")
+					.Newline(1, 26)
+					.Verbatim(2, 0, "\t// do something")
+					.Newline(2, 16)
+					.Verbatim(3, 0, "}")
+					.Newline(3, 1)
+					.CodeClose(4, 0);
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion js loop, with lang
 	}
