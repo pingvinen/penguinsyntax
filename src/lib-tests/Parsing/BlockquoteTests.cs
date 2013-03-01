@@ -107,5 +107,56 @@ namespace libtests.Parsing
 			CollectionAssert.AreEqual(expected, actual);
 		}
 		#endregion Nested, one line
+
+		#region One line, no text
+		[Test]
+		public void OneLine_NoText()
+		{
+			string source = @">";
+
+			List<Token> expected = new List<Token>();
+			expected.Add(new Token() {
+				Column = 0,
+				LineNumber = 0,
+				Type = TokenType.Blockquote
+			});
+
+			Tokenizer nizer = new Tokenizer();
+			List<Token> actual = nizer.Tokenize(source);
+
+			CollectionAssert.AreEqual(expected, actual);
+		}
+		#endregion One line, no text
+
+		#region Two lines, no text
+		[Test]
+		public void TwoLines_NoText()
+		{
+			string source = @">
+>";
+
+			List<Token> expected = new List<Token>();
+			expected.Add(new Token() {
+				Column = 0,
+				LineNumber = 0,
+				Type = TokenType.Blockquote
+			});
+			expected.Add(new Token() {
+				Column = 1,
+				LineNumber = 0,
+				Type = TokenType.Newline
+			});
+			expected.Add(new Token() {
+				Column = 0,
+				LineNumber = 1,
+				Type = TokenType.Blockquote
+			});
+
+			Tokenizer nizer = new Tokenizer();
+			List<Token> actual = nizer.Tokenize(source);
+
+			CollectionAssert.AreEqual(expected, actual);
+		}
+		#endregion Two lines, no text
 	}
 }
