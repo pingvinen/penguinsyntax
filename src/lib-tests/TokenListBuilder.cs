@@ -159,5 +159,21 @@ namespace libtests
 			return this;
 		}
 		#endregion Link title
+
+		#region Strong
+		public TokenListBuilder Strong(int line, int column)
+		{
+			this.AddToken(TokenType.Strong, line, column);
+			return this;
+		}
+		#endregion Strong
+
+		#region Emphasis
+		public TokenListBuilder Emphasis(int line, int column)
+		{
+			this.AddToken(TokenType.Emphasis, line, column);
+			return this;
+		}
+		#endregion Emphasis
 	}
 }

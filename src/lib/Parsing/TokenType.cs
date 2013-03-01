@@ -33,6 +33,9 @@ namespace PenguinSyntax.Parsing
 
 		LinkLabel = 13,
 		LinkUrl = 14,
-		LinkTitle = 15
+		LinkTitle = 15,
+
+		Strong = 16,
+		Emphasis = 17
 	}
 }
