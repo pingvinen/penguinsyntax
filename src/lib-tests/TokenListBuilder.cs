@@ -136,5 +136,28 @@ namespace libtests
 		}
 		#endregion Unordered list
 
+		#region Link label
+		public TokenListBuilder LinkLabel(int line, int column, string content)
+		{
+			this.AddToken(TokenType.LinkLabel, line, column, content);
+			return this;
+		}
+		#endregion Link label
+
+		#region Link URL
+		public TokenListBuilder LinkUrl(int line, int column, string content)
+		{
+			this.AddToken(TokenType.LinkUrl, line, column, content);
+			return this;
+		}
+		#endregion Link URL
+
+		#region Link title
+		public TokenListBuilder LinkTitle(int line, int column, string content)
+		{
+			this.AddToken(TokenType.LinkTitle, line, column, content);
+			return this;
+		}
+		#endregion Link title
 	}
 }

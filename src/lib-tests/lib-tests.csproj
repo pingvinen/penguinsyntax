@@ -62,5 +62,6 @@
     <Compile Include="Parsing\OrderedListTests.cs" />
     <Compile Include="Parsing\CodeBlockTests.cs" />
     <Compile Include="TokenListBuilder.cs" />
+    <Compile Include="Parsing\LinkTests.cs" />
   </ItemGroup>
 </Project>

@@ -29,6 +29,10 @@ namespace PenguinSyntax.Parsing
 		CodeOpen = 10,
 		CodeClose = 11,
 
-		Verbatim = 12
+		Verbatim = 12,
+
+		LinkLabel = 13,
+		LinkUrl = 14,
+		LinkTitle = 15
 	}
 }
