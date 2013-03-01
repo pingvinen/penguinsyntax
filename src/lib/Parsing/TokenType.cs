@@ -19,9 +19,6 @@ namespace PenguinSyntax.Parsing
 
 		Header1 = 4,
 		Header2 = 5,
-		Header3 = 6,
-		Header4 = 7,
-		Header5 = 8,
-		Header6 = 9
+		Header3 = 6
 	}
 }

@@ -210,24 +210,9 @@ namespace PenguinSyntax.Parsing
 							return TokenType.Header3;
 						}
 
-						case 4:
-						{
-							return TokenType.Header4;
-						}
-
-						case 5:
-						{
-							return TokenType.Header5;
-						}
-
-						case 6:
-						{
-							return TokenType.Header6;
-						}
-
 						default:
 						{
-							throw new PenguinSyntaxException("You are only allowed to use between 1 and 6 '#' for headers. You used {0}", headerlvl);
+							throw new PenguinSyntaxException("You are only allowed to use between 1 and 3 '#' for headers. You used {0}", headerlvl);
 						}
 					}
 				}
