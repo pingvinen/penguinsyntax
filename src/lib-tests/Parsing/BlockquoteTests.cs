@@ -14,23 +14,14 @@ namespace libtests.Parsing
 		{
 			string source = @"> something quoted";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Blockquote
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "something quoted"
-			});
+			var expected = new TokenListBuilder()
+				.Blockquote(0, 0)
+				.String(0, 2, "something quoted");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion One line
 
@@ -41,39 +32,17 @@ namespace libtests.Parsing
 			string source = @"> something quoted
 > second line";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Blockquote
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "something quoted"
-			});
-			expected.Add(new Token() {
-				Column = 18,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.Blockquote
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "second line"
-			});
+			var expected = new TokenListBuilder()
+				.Blockquote(0, 0)
+					.String(0, 2, "something quoted")
+					.Newline(0, 18)
+					.Blockquote(1, 0)
+					.String(1, 2, "second line");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Multiple lines
 
@@ -83,28 +52,15 @@ namespace libtests.Parsing
 		{
 			string source = @">> something quoted";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Blockquote
-			});
-			expected.Add(new Token() {
-				Column = 1,
-				LineNumber = 0,
-				Type = TokenType.Blockquote
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "something quoted"
-			});
+			var expected = new TokenListBuilder()
+				.Blockquote(0, 0)
+					.Blockquote(0, 1)
+					.String(0, 3, "something quoted");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Nested, one line
 
@@ -114,33 +70,16 @@ namespace libtests.Parsing
 		{
 			string source = @"> >   > something quoted";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Blockquote
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 0,
-				Type = TokenType.Blockquote
-			});
-			expected.Add(new Token() {
-				Column = 6,
-				LineNumber = 0,
-				Type = TokenType.Blockquote
-			});
-			expected.Add(new Token() {
-				Column = 8,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "something quoted"
-			});
+			var expected = new TokenListBuilder()
+				.Blockquote(0, 0)
+					.Blockquote(0, 2)
+					.Blockquote(0, 6)
+					.String(0, 8, "something quoted");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Nested, with spaces, one line
 
@@ -152,55 +91,20 @@ namespace libtests.Parsing
 > more recent quote
 And this is now";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Blockquote
-			});
-			expected.Add(new Token() {
-				Column = 1,
-				LineNumber = 0,
-				Type = TokenType.Blockquote
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "something quoted"
-			});
-			expected.Add(new Token() {
-				Column = 19,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.Blockquote
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "more recent quote"
-			});
-			expected.Add(new Token() {
-				Column = 19,
-				LineNumber = 1,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 2,
-				Type = TokenType.String,
-				Content = "And this is now"
-			});
+			var expected = new TokenListBuilder()
+				.Blockquote(0, 0)
+					.Blockquote(0, 1)
+					.String(0, 3, "something quoted")
+					.Newline(0, 19)
+					.Blockquote(1, 0)
+					.String(1, 2, "more recent quote")
+					.Newline(1, 19)
+					.String(2, 0, "And this is now");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Mixed nesting
 
@@ -210,17 +114,13 @@ And this is now";
 		{
 			string source = @">";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Blockquote
-			});
+			var expected = new TokenListBuilder()
+				.Blockquote(0, 0);
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion One line, no text
 
@@ -231,27 +131,15 @@ And this is now";
 			string source = @">
 >";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Blockquote
-			});
-			expected.Add(new Token() {
-				Column = 1,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.Blockquote
-			});
+			var expected = new TokenListBuilder()
+				.Blockquote(0, 0)
+					.Newline(0, 1)
+					.Blockquote(1, 0);
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Two lines, no text
 	}
