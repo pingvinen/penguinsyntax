@@ -103,5 +103,13 @@ namespace libtests
 			return this;
 		}
 		#endregion Header 3
+
+		#region Ordered list
+		public TokenListBuilder OrderedList(int line, int column)
+		{
+			this.AddToken(TokenType.OrderedList, line, column);
+			return this;
+		}
+		#endregion Ordered list
 	}
 }

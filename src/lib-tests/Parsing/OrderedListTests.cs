@@ -14,23 +14,14 @@ namespace libtests.Parsing
 		{
 			string source = @"1. Item";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.OrderedList
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Item"
-			});
+			var expected = new TokenListBuilder()
+				.OrderedList(0, 0)
+					.String(0, 3, "Item");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion 1 item
 
@@ -42,55 +33,20 @@ namespace libtests.Parsing
 2. Item 2
 3. Item 3";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.OrderedList
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Item 1"
-			});
-			expected.Add(new Token() {
-				Column = 9,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.OrderedList
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "Item 2"
-			});
-			expected.Add(new Token() {
-				Column = 9,
-				LineNumber = 1,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 2,
-				Type = TokenType.OrderedList
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 2,
-				Type = TokenType.String,
-				Content = "Item 3"
-			});
+			var expected = new TokenListBuilder()
+				.OrderedList(0, 0)
+					.String(0, 3, "Item 1")
+					.Newline(0, 9)
+					.OrderedList(1, 0)
+					.String(1, 3, "Item 2")
+					.Newline(1, 9)
+					.OrderedList(2, 0)
+					.String(2, 3, "Item 3");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion 3 items
 
@@ -100,23 +56,14 @@ namespace libtests.Parsing
 		{
 			string source = @"123. Item";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.OrderedList
-			});
-			expected.Add(new Token() {
-				Column = 5,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Item"
-			});
+			var expected = new TokenListBuilder()
+				.OrderedList(0, 0)
+					.String(0, 5, "Item");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion 1 item
 
@@ -126,18 +73,13 @@ namespace libtests.Parsing
 		{
 			string source = @"1987\. What a great year to be born.";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "1987. What a great year to be born."
-			});
+			var expected = new TokenListBuilder()
+				.String(0, 0, "1987. What a great year to be born.");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Accidental ordered list
 	}
