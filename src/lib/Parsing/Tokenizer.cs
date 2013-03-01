@@ -31,6 +31,9 @@ namespace PenguinSyntax.Parsing
 				this.column++;
 				cur = this.source[this.globalposition];
 
+				//
+				// newlines
+				//
 				if (cur == '\n')
 				{
 					tokens.Add(new Token() {
@@ -41,6 +44,14 @@ namespace PenguinSyntax.Parsing
 
 					this.linenumber++;
 					this.column = -1;
+					continue;
+				}
+
+				//
+				// space
+				//
+				if (cur == ' ')
+				{
 					continue;
 				}
 
