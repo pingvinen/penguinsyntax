@@ -112,7 +112,7 @@ namespace PenguinSyntax.Parsing
 				Type = TokenType.String
 			};
 
-			int start = this.globalposition;
+			int start = -1;
 			int substringlength = 0;
 
 			char cur = '\0';
@@ -120,11 +120,26 @@ namespace PenguinSyntax.Parsing
 			{
 				cur = this.source[this.globalposition];
 
-				if (cur == '\n')
+				// skip spaces at the beginning
+				if (start == -1 && cur != ' ')
 				{
-					// let the main method handle the newline
-					this.globalposition--;
-					this.column--;
+					start = this.globalposition;
+				}
+
+				else if (cur == '\n' || (this.globalposition == this.source.Length-1))
+				{
+					if (cur == '\n')
+					{
+						// let the main method handle the newline
+						this.globalposition--;
+						this.column--;
+					}
+					else
+					{
+						// if end-of-source is the reason we are stopping,
+						// then we need to increase the substring
+						substringlength++;
+					}
 
 					t.Content = this.source.Substring(start, substringlength);
 					return t;
