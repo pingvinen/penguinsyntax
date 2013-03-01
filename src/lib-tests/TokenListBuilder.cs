@@ -79,5 +79,29 @@ namespace libtests
 			return this;
 		}
 		#endregion Verbatim
+
+		#region Header 1
+		public TokenListBuilder Header1(int line, int column)
+		{
+			this.AddToken(TokenType.Header1, line, column);
+			return this;
+		}
+		#endregion Header 1
+
+		#region Header 2
+		public TokenListBuilder Header2(int line, int column)
+		{
+			this.AddToken(TokenType.Header2, line, column);
+			return this;
+		}
+		#endregion Header 2
+
+		#region Header 3
+		public TokenListBuilder Header3(int line, int column)
+		{
+			this.AddToken(TokenType.Header3, line, column);
+			return this;
+		}
+		#endregion Header 3
 	}
 }

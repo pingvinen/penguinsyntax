@@ -15,23 +15,14 @@ namespace libtests.Parsing
 		{
 			string source = @"# Header1";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Header1
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Header1"
-			});
+			var expected = new TokenListBuilder()
+				.Header1(0, 0)
+					.String(0, 2, "Header1");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Header1: one line, valid
 
@@ -39,31 +30,17 @@ namespace libtests.Parsing
 		[Test]
 		public void Header1_NewlineBefore_Valid()
 		{
-			string source = @"
-# Header1";
+			string source = "\n# Header1";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.Header1
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "Header1"
-			});
+			var expected = new TokenListBuilder()
+				.Newline(0, 0)
+					.Header1(1, 0)
+					.String(1, 2, "Header1");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Header1: newline before, valid
 
@@ -74,28 +51,15 @@ namespace libtests.Parsing
 			string source = @"# Header1
 ";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Header1
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Header1"
-			});
-			expected.Add(new Token() {
-				Column = 9,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
+			var expected = new TokenListBuilder()
+				.Header1(0, 0)
+					.String(0, 2, "Header1")
+					.Newline(0, 9);
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Header1: newline after, valid
 	
@@ -105,23 +69,14 @@ namespace libtests.Parsing
 		{
 			string source = @"## Header2";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Header2
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Header2"
-			});
+			var expected = new TokenListBuilder()
+				.Header2(0, 0)
+					.String(0, 3, "Header2");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Header2: one line, valid
 
@@ -129,31 +84,17 @@ namespace libtests.Parsing
 		[Test]
 		public void Header2_NewlineBefore_Valid()
 		{
-			string source = @"
-## Header2";
+			string source = "\n## Header2";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.Header2
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "Header2"
-			});
+			var expected = new TokenListBuilder()
+				.Newline(0, 0)
+					.Header2(1, 0)
+					.String(1, 3, "Header2");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Header2: newline before, valid
 
@@ -164,28 +105,15 @@ namespace libtests.Parsing
 			string source = @"## Header2
 ";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Header2
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Header2"
-			});
-			expected.Add(new Token() {
-				Column = 10,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
+			var expected = new TokenListBuilder()
+				.Header2(0, 0)
+					.String(0, 3, "Header2")
+					.Newline(0, 10);
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Header2: newline after, valid
 
@@ -195,23 +123,14 @@ namespace libtests.Parsing
 		{
 			string source = @"### Header3";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Header3
-			});
-			expected.Add(new Token() {
-				Column = 4,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Header3"
-			});
+			var expected = new TokenListBuilder()
+				.Header3(0, 0)
+					.String(0, 4, "Header3");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Header3: one line, valid
 
@@ -219,31 +138,17 @@ namespace libtests.Parsing
 		[Test]
 		public void Header3_NewlineBefore_Valid()
 		{
-			string source = @"
-### Header3";
+			string source = "\n### Header3";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.Header3
-			});
-			expected.Add(new Token() {
-				Column = 4,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "Header3"
-			});
+			var expected = new TokenListBuilder()
+				.Newline(0, 0)
+					.Header3(1, 0)
+					.String(1, 4, "Header3");
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Header3: newline before, valid
 
@@ -254,28 +159,15 @@ namespace libtests.Parsing
 			string source = @"### Header3
 ";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Header3
-			});
-			expected.Add(new Token() {
-				Column = 4,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Header3"
-			});
-			expected.Add(new Token() {
-				Column = 11,
-				LineNumber = 0,
-				Type = TokenType.Newline
-			});
+			var expected = new TokenListBuilder()
+				.Header3(0, 0)
+					.String(0, 4, "Header3")
+					.Newline(0, 11);
 
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
 
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion Header3: newline after, valid
 
