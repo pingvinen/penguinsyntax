@@ -2,13 +2,12 @@ using System;
 using NUnit.Framework;
 using System.Collections.Generic;
 using PenguinSyntax.Parsing;
-
 namespace libtests.Parsing
 {
 	[TestFixture]
 	public class HeaderTests
 	{
-		#region Underlined header 1
+		#region Underlined header1: two lines valid
 		[Test]
 		public void UnderlinedH1_TwoLines_Valid()
 		{
@@ -31,60 +30,51 @@ namespace libtests.Parsing
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 1,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 2,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 3,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 4,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 5,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 6,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
-
 			Tokenizer nizer = new Tokenizer();
-
 			List<Token> actual = nizer.Tokenize(source);
-
 			CollectionAssert.AreEqual(expected, actual);
 		}
+		#endregion Underlined header1: two lines valid
 
+		#region Underlined header1: three lines, newline after, valid
 		[Test]
 		public void UnderlinedH1_ThreeLines_NewlineAfter_Valid()
 		{
 			string source = @"Header1
 =======
 ";
-
 			List<Token> expected = new List<Token>();
 			expected.Add(new Token() {
 				Column = 0,
@@ -101,135 +91,118 @@ namespace libtests.Parsing
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 1,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 2,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 3,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 4,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 5,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 6,
 				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 7,
-				LineNumber = 0,
+				LineNumber = 1,
 				Type = TokenType.Newline,
 				Content = String.Empty
 			});
-
 			Tokenizer nizer = new Tokenizer();
-
 			List<Token> actual = nizer.Tokenize(source);
-
 			CollectionAssert.AreEqual(expected, actual);
 		}
+		#endregion Underlined header1: three lines, newline after, valid
 
+		#region Underlined header1: three lines, newline before, valid
 		[Test]
 		public void UnderlinedH1_ThreeLines_NewlineBefore_Valid()
 		{
 			string source = @"
 Header1
 =======";
-
 			List<Token> expected = new List<Token>();
 			expected.Add(new Token() {
-				Column = 7,
+				Column = 0,
 				LineNumber = 0,
 				Type = TokenType.Newline,
 				Content = String.Empty
 			});
 			expected.Add(new Token() {
 				Column = 0,
-				LineNumber = 0,
+				LineNumber = 1,
 				Type = TokenType.String,
 				Content = "Header1"
 			});
 			expected.Add(new Token() {
 				Column = 7,
-				LineNumber = 0,
+				LineNumber = 1,
 				Type = TokenType.Newline,
 				Content = String.Empty
 			});
 			expected.Add(new Token() {
 				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 1,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 2,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 3,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 4,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 5,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 6,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
-
 			Tokenizer nizer = new Tokenizer();
-
 			List<Token> actual = nizer.Tokenize(source);
-
 			CollectionAssert.AreEqual(expected, actual);
 		}
+		#endregion Underlined header1: three lines, newline before, valid
 
+		#region Underlined header1: four lines, newline before and after, valid
 		[Test]
 		public void UnderlinedH1_FourLines_NewlineBeforeAndAfter_Valid()
 		{
@@ -237,81 +210,70 @@ Header1
 Header1
 =======
 ";
-
 			List<Token> expected = new List<Token>();
 			expected.Add(new Token() {
-				Column = 7,
+				Column = 0,
 				LineNumber = 0,
 				Type = TokenType.Newline,
 				Content = String.Empty
 			});
 			expected.Add(new Token() {
 				Column = 0,
-				LineNumber = 0,
+				LineNumber = 1,
 				Type = TokenType.String,
 				Content = "Header1"
 			});
 			expected.Add(new Token() {
 				Column = 7,
-				LineNumber = 0,
+				LineNumber = 1,
 				Type = TokenType.Newline,
 				Content = String.Empty
 			});
 			expected.Add(new Token() {
 				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 1,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 2,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 3,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 4,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 5,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 6,
-				LineNumber = 1,
-				Type = TokenType.StrongLine,
-				Content = "="
+				LineNumber = 2,
+				Type = TokenType.StrongLine
 			});
 			expected.Add(new Token() {
 				Column = 7,
-				LineNumber = 0,
+				LineNumber = 2,
 				Type = TokenType.Newline,
 				Content = String.Empty
 			});
-
 			Tokenizer nizer = new Tokenizer();
-
 			List<Token> actual = nizer.Tokenize(source);
-
 			CollectionAssert.AreEqual(expected, actual);
 		}
-		#endregion Underlined header 1
+		#endregion Underlined header1: four lines, newline before and after, valid
 	}
 }
