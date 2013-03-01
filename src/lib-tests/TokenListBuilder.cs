@@ -111,5 +111,13 @@ namespace libtests
 			return this;
 		}
 		#endregion Ordered list
+
+		#region Strong line
+		public TokenListBuilder StrongLine(int line, int column)
+		{
+			this.AddToken(TokenType.StrongLine, line, column);
+			return this;
+		}
+		#endregion Strong line
 	}
 }

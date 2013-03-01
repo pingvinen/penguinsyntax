@@ -14,57 +14,21 @@ namespace libtests.Parsing
 			string source = @"Header1
 =======";
 
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Header1"
-			});
-			expected.Add(new Token() {
-				Column = 7,
-				LineNumber = 0,
-				Type = TokenType.Newline,
-				Content = String.Empty
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 1,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 4,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 5,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 6,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
+			var expected = new TokenListBuilder()
+				.String(0, 0, "Header1")
+					.Newline(0, 7)
+					.StrongLine(1, 0)
+					.StrongLine(1, 1)
+					.StrongLine(1, 2)
+					.StrongLine(1, 3)
+					.StrongLine(1, 4)
+					.StrongLine(1, 5)
+					.StrongLine(1, 6);
+
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
-			CollectionAssert.AreEqual(expected, actual);
+
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion two lines valid
 
@@ -75,63 +39,22 @@ namespace libtests.Parsing
 			string source = @"Header1
 =======
 ";
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.String,
-				Content = "Header1"
-			});
-			expected.Add(new Token() {
-				Column = 7,
-				LineNumber = 0,
-				Type = TokenType.Newline,
-				Content = String.Empty
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 1,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 4,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 5,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 6,
-				LineNumber = 1,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 7,
-				LineNumber = 1,
-				Type = TokenType.Newline,
-				Content = String.Empty
-			});
+			var expected = new TokenListBuilder()
+				.String(0, 0, "Header1")
+					.Newline(0, 7)
+					.StrongLine(1, 0)
+					.StrongLine(1, 1)
+					.StrongLine(1, 2)
+					.StrongLine(1, 3)
+					.StrongLine(1, 4)
+					.StrongLine(1, 5)
+					.StrongLine(1, 6)
+					.Newline(1, 7);
+
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
-			CollectionAssert.AreEqual(expected, actual);
+
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion three lines, newline after, valid
 
@@ -142,63 +65,22 @@ namespace libtests.Parsing
 			string source = @"
 Header1
 =======";
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Newline,
-				Content = String.Empty
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "Header1"
-			});
-			expected.Add(new Token() {
-				Column = 7,
-				LineNumber = 1,
-				Type = TokenType.Newline,
-				Content = String.Empty
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 1,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 4,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 5,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 6,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
+			var expected = new TokenListBuilder()
+				.Newline(0, 0)
+					.String(1, 0, "Header1")
+					.Newline(1, 7)
+					.StrongLine(2, 0)
+					.StrongLine(2, 1)
+					.StrongLine(2, 2)
+					.StrongLine(2, 3)
+					.StrongLine(2, 4)
+					.StrongLine(2, 5)
+					.StrongLine(2, 6);
+
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
-			CollectionAssert.AreEqual(expected, actual);
+
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion three lines, newline before, valid
 
@@ -210,69 +92,23 @@ Header1
 Header1
 =======
 ";
-			List<Token> expected = new List<Token>();
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 0,
-				Type = TokenType.Newline,
-				Content = String.Empty
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 1,
-				Type = TokenType.String,
-				Content = "Header1"
-			});
-			expected.Add(new Token() {
-				Column = 7,
-				LineNumber = 1,
-				Type = TokenType.Newline,
-				Content = String.Empty
-			});
-			expected.Add(new Token() {
-				Column = 0,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 1,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 2,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 3,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 4,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 5,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 6,
-				LineNumber = 2,
-				Type = TokenType.StrongLine
-			});
-			expected.Add(new Token() {
-				Column = 7,
-				LineNumber = 2,
-				Type = TokenType.Newline,
-				Content = String.Empty
-			});
+			var expected = new TokenListBuilder()
+				.Newline(0, 0)
+					.String(1, 0, "Header1")
+					.Newline(1, 7)
+					.StrongLine(2, 0)
+					.StrongLine(2, 1)
+					.StrongLine(2, 2)
+					.StrongLine(2, 3)
+					.StrongLine(2, 4)
+					.StrongLine(2, 5)
+					.StrongLine(2, 6)
+					.Newline(2, 7);
+
 			Tokenizer nizer = new Tokenizer();
 			List<Token> actual = nizer.Tokenize(source);
-			CollectionAssert.AreEqual(expected, actual);
+
+			CollectionAssert.AreEqual(expected.List, actual);
 		}
 		#endregion four lines, newline before and after, valid
 	}
