@@ -15,6 +15,13 @@ namespace PenguinSyntax.Parsing
 		/// <summary>
 		/// Represents "-"
 		/// </summary>
-		Line = 3
+		Line = 3,
+
+		Header1 = 4,
+		Header2 = 5,
+		Header3 = 6,
+		Header4 = 7,
+		Header5 = 8,
+		Header6 = 9
 	}
 }

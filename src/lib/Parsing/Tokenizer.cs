@@ -71,6 +71,15 @@ namespace PenguinSyntax.Parsing
 				}
 
 				//
+				// oneline header
+				//
+				if (cur == '#')
+				{
+					tokens.Add(this.GetOneLineHeader());
+					continue;
+				}
+
+				//
 				// if we get this far, we must be
 				// looking at a string
 				//
@@ -113,9 +122,124 @@ namespace PenguinSyntax.Parsing
 				substringlength++;
 			}
 
-			throw new PenguinSyntaxException("Unable to find end of string");
+			throw new PenguinSyntaxException("I was not able to find the end of the string");
 		}
 		#endregion Get string
+
+		#region Get oneline header
+		private Token GetOneLineHeader()
+		{
+			Token t = new Token() {
+				Column = this.column,
+				LineNumber = this.linenumber
+			};
+
+			t.Type = this.GetOneLineHeaderType();
+
+			int start = -1;
+			int substringlength = 0;
+
+			char cur = '\0';
+			while (this.globalposition < this.source.Length)
+			{
+				cur = this.source[this.globalposition];
+
+				// skip spaces at the beginning
+				if (start == -1 && cur != ' ')
+				{
+					start = this.globalposition;
+				}
+
+				else if (cur == '\n' || (this.globalposition == this.source.Length-1))
+				{
+					if (cur == '\n')
+					{
+						// let the main method handle the newline
+						this.globalposition--;
+						this.column--;
+					}
+					else
+					{
+						// if end-of-source is the reason we are stopping,
+						// then we need to increase the substring
+						substringlength++;
+					}
+
+					t.Content = this.source.Substring(start, substringlength);
+					return t;
+				}
+
+				this.globalposition++;
+				this.column++;
+
+				if (cur != ' ')
+				{
+					substringlength++;
+				}
+			}
+
+			throw new PenguinSyntaxException("I was not able to find the end of the one-line header");
+		}
+		#endregion Get oneline header
+
+		#region Get oneline header type
+		private TokenType GetOneLineHeaderType()
+		{
+			int headerlvl = 0;
+			char cur = '\0';
+			while (this.globalposition < this.source.Length)
+			{
+				cur = this.source[this.globalposition];
+
+				if (cur != '#')
+				{
+					switch (headerlvl)
+					{
+						case 1:
+						{
+							return TokenType.Header1;
+						}
+
+						case 2:
+						{
+							return TokenType.Header2;
+						}
+
+						case 3:
+						{
+							return TokenType.Header3;
+						}
+
+						case 4:
+						{
+							return TokenType.Header4;
+						}
+
+						case 5:
+						{
+							return TokenType.Header5;
+						}
+
+						case 6:
+						{
+							return TokenType.Header6;
+						}
+
+						default:
+						{
+							throw new PenguinSyntaxException("You are only allowed to use between 1 and 6 '#' for headers. You used {0}", headerlvl);
+						}
+					}
+				}
+
+				this.globalposition++;
+				this.column++;
+				headerlvl++;
+			}
+
+			throw new PenguinSyntaxException("I was not able to find the end of the header type");
+		}
+		#endregion Get oneline header type
 	}
 }
 
