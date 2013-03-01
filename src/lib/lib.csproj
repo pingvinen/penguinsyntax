@@ -33,6 +33,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Parsing\Token.cs" />
+    <Compile Include="Parsing\Tokenizer.cs" />
+    <Compile Include="Parsing\TokenType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -44,5 +47,6 @@
   </ProjectExtensions>
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Parsing\" />
   </ItemGroup>
 </Project>

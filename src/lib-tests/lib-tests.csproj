@@ -48,4 +48,10 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Parsing\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Parsing\HeaderTests.cs" />
+  </ItemGroup>
 </Project>
