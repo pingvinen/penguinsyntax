@@ -86,7 +86,7 @@ namespace PenguinSyntax.Parsing
 				//
 				if (cur == '#')
 				{
-					tokens.Add(this.GetOneLineHeader());
+					tokens.Add(this.GetOneLineHeaderType());
 					continue;
 				}
 
@@ -165,65 +165,14 @@ namespace PenguinSyntax.Parsing
 		}
 		#endregion Get string
 
-		#region Get oneline header
-		private Token GetOneLineHeader()
+		#region Get oneline header type
+		private Token GetOneLineHeaderType()
 		{
 			Token t = new Token() {
 				Column = this.column,
 				LineNumber = this.linenumber
 			};
 
-			t.Type = this.GetOneLineHeaderType();
-
-			int start = -1;
-			int substringlength = 0;
-
-			char cur = '\0';
-			while (this.globalposition < this.source.Length)
-			{
-				cur = this.source[this.globalposition];
-
-				// skip spaces at the beginning
-				if (start == -1 && cur != ' ')
-				{
-					start = this.globalposition;
-				}
-
-				else if (cur == '\n' || (this.globalposition == this.source.Length-1))
-				{
-					if (cur == '\n')
-					{
-						// let the main method handle the newline
-						this.globalposition--;
-						this.column--;
-					}
-					else
-					{
-						// if end-of-source is the reason we are stopping,
-						// then we need to increase the substring
-						substringlength++;
-					}
-
-					t.Content = this.source.Substring(start, substringlength);
-					return t;
-				}
-
-				this.globalposition++;
-				this.column++;
-
-				if (cur != ' ')
-				{
-					substringlength++;
-				}
-			}
-
-			throw new PenguinSyntaxException("I was not able to find the end of the one-line header");
-		}
-		#endregion Get oneline header
-
-		#region Get oneline header type
-		private TokenType GetOneLineHeaderType()
-		{
 			int headerlvl = 0;
 			char cur = '\0';
 			while (this.globalposition < this.source.Length)
@@ -236,17 +185,20 @@ namespace PenguinSyntax.Parsing
 					{
 						case 1:
 						{
-							return TokenType.Header1;
+							t.Type = TokenType.Header1;
+							return t;
 						}
 
 						case 2:
 						{
-							return TokenType.Header2;
+							t.Type = TokenType.Header2;
+							return t;
 						}
 
 						case 3:
 						{
-							return TokenType.Header3;
+							t.Type = TokenType.Header3;
+							return t;
 						}
 
 						default:

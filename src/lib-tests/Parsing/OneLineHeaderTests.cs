@@ -18,7 +18,12 @@ namespace libtests.Parsing
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 0,
-				Type = TokenType.Header1,
+				Type = TokenType.Header1
+			});
+			expected.Add(new Token() {
+				Column = 2,
+				LineNumber = 0,
+				Type = TokenType.String,
 				Content = "Header1"
 			});
 
@@ -45,7 +50,12 @@ namespace libtests.Parsing
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 1,
-				Type = TokenType.Header1,
+				Type = TokenType.Header1
+			});
+			expected.Add(new Token() {
+				Column = 2,
+				LineNumber = 1,
+				Type = TokenType.String,
 				Content = "Header1"
 			});
 
@@ -67,7 +77,12 @@ namespace libtests.Parsing
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 0,
-				Type = TokenType.Header1,
+				Type = TokenType.Header1
+			});
+			expected.Add(new Token() {
+				Column = 2,
+				LineNumber = 0,
+				Type = TokenType.String,
 				Content = "Header1"
 			});
 			expected.Add(new Token() {
@@ -93,7 +108,12 @@ namespace libtests.Parsing
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 0,
-				Type = TokenType.Header2,
+				Type = TokenType.Header2
+			});
+			expected.Add(new Token() {
+				Column = 3,
+				LineNumber = 0,
+				Type = TokenType.String,
 				Content = "Header2"
 			});
 
@@ -120,7 +140,12 @@ namespace libtests.Parsing
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 1,
-				Type = TokenType.Header2,
+				Type = TokenType.Header2
+			});
+			expected.Add(new Token() {
+				Column = 3,
+				LineNumber = 1,
+				Type = TokenType.String,
 				Content = "Header2"
 			});
 
@@ -142,7 +167,12 @@ namespace libtests.Parsing
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 0,
-				Type = TokenType.Header2,
+				Type = TokenType.Header2
+			});
+			expected.Add(new Token() {
+				Column = 3,
+				LineNumber = 0,
+				Type = TokenType.String,
 				Content = "Header2"
 			});
 			expected.Add(new Token() {
@@ -168,7 +198,12 @@ namespace libtests.Parsing
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 0,
-				Type = TokenType.Header3,
+				Type = TokenType.Header3
+			});
+			expected.Add(new Token() {
+				Column = 4,
+				LineNumber = 0,
+				Type = TokenType.String,
 				Content = "Header3"
 			});
 
@@ -195,7 +230,12 @@ namespace libtests.Parsing
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 1,
-				Type = TokenType.Header3,
+				Type = TokenType.Header3
+			});
+			expected.Add(new Token() {
+				Column = 4,
+				LineNumber = 1,
+				Type = TokenType.String,
 				Content = "Header3"
 			});
 
@@ -217,7 +257,12 @@ namespace libtests.Parsing
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 0,
-				Type = TokenType.Header3,
+				Type = TokenType.Header3
+			});
+			expected.Add(new Token() {
+				Column = 4,
+				LineNumber = 0,
+				Type = TokenType.String,
 				Content = "Header3"
 			});
 			expected.Add(new Token() {
