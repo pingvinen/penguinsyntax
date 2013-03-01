@@ -37,6 +37,7 @@
     <Compile Include="Parsing\Tokenizer.cs" />
     <Compile Include="Parsing\TokenType.cs" />
     <Compile Include="PenguinSyntaxException.cs" />
+    <Compile Include="Parsing\GetStringMode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

@@ -55,7 +55,7 @@ namespace libtests.Parsing
 				Content = "javascript"
 			});
 			expected.Add(new Token() {
-				Column = 3,
+				Column = 13,
 				LineNumber = 0,
 				Type = TokenType.Newline
 			});
@@ -97,17 +97,30 @@ for (var i=0; i<10; i++) {
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 1,
-				Type = TokenType.Verbatim
+				Type = TokenType.Verbatim,
+				Content = "for (var i=0; i<10; i++) {"
+			});
+			expected.Add(new Token() {
+				Column = 26,
+				LineNumber = 1,
+				Type = TokenType.Newline
 			});
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 2,
-				Type = TokenType.Verbatim
+				Type = TokenType.Verbatim,
+				Content = "	// do something"
+			});
+			expected.Add(new Token() {
+				Column = 16,
+				LineNumber = 2,
+				Type = TokenType.Newline
 			});
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 3,
-				Type = TokenType.Verbatim
+				Type = TokenType.Verbatim,
+				Content = "}"
 			});
 			expected.Add(new Token() {
 				Column = 1,
@@ -145,24 +158,37 @@ for (var i=0; i<10; i++) {
 				Content = "javascript"
 			});
 			expected.Add(new Token() {
-				Column = 3,
+				Column = 13,
 				LineNumber = 0,
 				Type = TokenType.Newline
 			});
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 1,
-				Type = TokenType.Verbatim
+				Type = TokenType.Verbatim,
+				Content = "for (var i=0; i<10; i++) {"
+			});
+			expected.Add(new Token() {
+				Column = 26,
+				LineNumber = 1,
+				Type = TokenType.Newline
 			});
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 2,
-				Type = TokenType.Verbatim
+				Type = TokenType.Verbatim,
+				Content = "	// do something"
+			});
+			expected.Add(new Token() {
+				Column = 16,
+				LineNumber = 2,
+				Type = TokenType.Newline
 			});
 			expected.Add(new Token() {
 				Column = 0,
 				LineNumber = 3,
-				Type = TokenType.Verbatim
+				Type = TokenType.Verbatim,
+				Content = "}"
 			});
 			expected.Add(new Token() {
 				Column = 1,
