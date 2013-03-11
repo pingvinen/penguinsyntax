@@ -129,7 +129,12 @@ namespace PenguinSyntax.Parsing
 				//
 				// unordered list
 				//
-				if (cur == '*' || cur == '+' || cur == '-')
+				// NOTE
+				// an unordered list can be opened with *, but so can a string
+				// beginning with a strong word... therefore we check that
+				// the next character is a space when * triggers this rule
+				//
+				if ((cur == '*' && next == ' ' ) || cur == '+' || cur == '-')
 				{
 					tokens.Add(new Token() {
 						Column = this.column,
@@ -243,11 +248,16 @@ namespace PenguinSyntax.Parsing
 
 				//
 				// open/close emphasis
+				// open/close strong
 				//
 				else if (!doVerbatim && 
-					         (cur == '_' && next != ' ' && next != '\0')
-					         ||
-					         (cur == '_')
+					        (cur == '_' && next != ' ' && next != '\0')
+					        ||
+					        (cur == '_')
+				         	||
+				         	(cur == '*' && next != ' ' && next != '\0')
+				         	||
+				         	(cur == '*')
 				         )
 				{
 					// close the currently open token
@@ -264,7 +274,7 @@ namespace PenguinSyntax.Parsing
 					t = new Token() {
 						Column = this.column,
 						LineNumber = this.linenumber,
-						Type = TokenType.Emphasis
+						Type = cur == '*' ? TokenType.Strong : TokenType.Emphasis
 					};
 					res.Add(t);
 					t = null;
