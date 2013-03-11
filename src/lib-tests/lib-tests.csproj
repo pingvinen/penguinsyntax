@@ -67,5 +67,6 @@
     <Compile Include="Parsing\EmphasisStrongTests.cs" />
     <Compile Include="Generation\HeadersTests.cs" />
     <Compile Include="Generation\BlockquoteTests.cs" />
+    <Compile Include="Generation\StringTests.cs" />
   </ItemGroup>
 </Project>
