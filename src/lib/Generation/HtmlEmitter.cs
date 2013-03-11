@@ -38,10 +38,7 @@ namespace PenguinSyntax.Generation
 				this.cur = this.source[this.curPos];
 				this.next = this.LookAhead();
 
-				if (this.source.IsPatternPresent(this.curPos, this.TypeTester, 
-				                                 new Token() { Type = TokenType.String },
-													new Token() { Type = TokenType.Newline },
-													new Token() { Type = TokenType.StrongLine }))
+				if (this.IsPattern(new PatternBuilder().String().Newline().StrongLine().List))
 				{
 					sb.AppendFormat("<h1>{0}</h1>", this.cur.Content);
 				}
@@ -50,6 +47,11 @@ namespace PenguinSyntax.Generation
 			return sb.ToString();
 		}
 		#endregion Emit
+
+		private bool IsPattern(IList<Token> pattern)
+		{
+			return this.source.IsPatternPresent(this.curPos, this.TypeTester, pattern);
+		}
 
 		#region Look ahead
 		private Token LookAhead()
