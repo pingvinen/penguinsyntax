@@ -17,6 +17,7 @@ namespace PenguinSyntax.Generation
 		private Token next;
 		private Token prev;
 		private IList<Token> source;
+		private Stack<TokenType> openElements = new Stack<TokenType>();
 
 		private bool TypeTester(Token inList, Token inPattern)
 		{
@@ -69,11 +70,60 @@ namespace PenguinSyntax.Generation
 					this.SkipAheadToNextNot(TokenType.Header3);
 				}
 				#endregion Headers
+
+				#region Blockquote
+				else if (this.cur.Type == TokenType.Blockquote)
+				{
+					// open a blockquote element in the model
+					this.openElements.Push(TokenType.Blockquote);
+
+					// open a blockquote in html
+					sb.Append("<blockquote>");
+
+					//
+					// somehow handle multiline quotes
+					//
+				}
+				#endregion Blockquote
+
+				else if (this.cur.Type == TokenType.String)
+				{
+					sb.AppendFormat("<p>{0}</p>", this.cur.Content);
+				}
+
+				else if (this.cur.Type == TokenType.Newline && this.next != null && this.next.Type == TokenType.Newline)
+				{
+					this.CloseOpenElements();
+				}
 			}
+
+			this.CloseOpenElements();
 
 			return sb.ToString();
 		}
 		#endregion Emit
+
+		private string CloseOpenElements()
+		{
+			StringBuilder sb = new StringBuilder();
+
+			TokenType tmp;
+			while (this.openElements.Count > 0)
+			{
+				tmp = this.openElements.Pop();
+
+				switch (tmp)
+				{
+					case TokenType.Blockquote:
+					{
+						sb.Append("</blockqoute>");
+						break;
+					}
+				}
+			}
+
+			return sb.ToString();
+		}
 
 		#region Helper: skip ahead
 		private void SkipAheadUntil(TokenType untilType)
