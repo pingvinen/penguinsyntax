@@ -306,6 +306,97 @@ namespace PenguinSyntax.Parsing
 					continue;
 				}
 
+				//
+				// open link-label
+				//
+				else if (cur == '[')
+				{
+					// close the currently open token
+					if (t != null)
+					{
+						t.Content = sb.ToString();
+						res.Add(t);
+					}
+
+					sb = new StringBuilder();
+
+					// create emphasis token
+					t = new Token() {
+						Column = this.column,
+						LineNumber = this.linenumber,
+						Type = TokenType.LinkLabel
+					};
+
+					this.globalposition++;
+					this.column++;
+					continue;
+				}
+
+				//
+				// close link-label
+				//
+				else if (cur == ']' && t != null && t.Type == TokenType.LinkLabel)
+				{
+					t.Content = sb.ToString();
+					res.Add(t);
+					t = null;
+					sb = new StringBuilder();
+
+					this.globalposition++;
+					this.column++;
+					continue;
+				}
+
+				//
+				// open link-url
+				//
+				else if (cur == '(' && prev == ']')
+				{
+					// close the currently open token
+					if (t != null)
+					{
+						t.Content = sb.ToString();
+						res.Add(t);
+					}
+
+					sb = new StringBuilder();
+
+					// create emphasis token
+					t = new Token() {
+						Column = this.column,
+						LineNumber = this.linenumber,
+						Type = TokenType.LinkUrl
+					};
+
+					this.globalposition++;
+					this.column++;
+					continue;
+				}
+
+				//
+				// close link-url
+				//
+				else if (cur == ')' && t != null && t.Type == TokenType.LinkUrl)
+				{
+					t.Content = sb.ToString();
+					res.Add(t);
+					t = null;
+					sb = new StringBuilder();
+
+					// end-of-source
+					if (this.globalposition == this.source.Length-1)
+					{
+						return res;
+					}
+
+					this.globalposition++;
+					this.column++;
+					continue;
+				}
+
+				//
+				// newline and end-of-source
+				//
 				else if (cur == '\n' || (this.globalposition == this.source.Length-1))
 				{
 					if (cur == '\n')
