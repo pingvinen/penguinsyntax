@@ -68,5 +68,6 @@
     <Compile Include="Generation\HeadersTests.cs" />
     <Compile Include="Generation\BlockquoteTests.cs" />
     <Compile Include="Generation\StringTests.cs" />
+    <Compile Include="Generation\CodeBlockTests.cs" />
   </ItemGroup>
 </Project>
