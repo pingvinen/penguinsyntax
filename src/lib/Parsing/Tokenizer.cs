@@ -149,7 +149,7 @@ namespace PenguinSyntax.Parsing
 					if (tmp == null)
 					{
 						// this was an accidental list
-						tokens.Add(this.GetString());
+						tokens.AddRange(this.GetString());
 						continue;
 					}
 
@@ -182,11 +182,11 @@ namespace PenguinSyntax.Parsing
 				//
 				if (!flagInCodeBlock)
 				{
-					tokens.Add(this.GetString());
+					tokens.AddRange(this.GetString());
 				}
 				else
 				{
-					tokens.Add(this.GetString(GetStringMode.Verbatim));
+					tokens.AddRange(this.GetString(GetStringMode.Verbatim));
 				}
 			}
 
@@ -209,27 +209,22 @@ namespace PenguinSyntax.Parsing
 		#endregion Lookahead
 
 		#region Get string
-		private Token GetString()
+		private IList<Token> GetString()
 		{
 			return this.GetString(GetStringMode.String);
 		}
 
-		private Token GetString(GetStringMode mode)
+		private IList<Token> GetString(GetStringMode mode)
 		{
-			Token t = new Token() {
-				Column = this.column,
-				LineNumber = this.linenumber,
-				Type = TokenType.String
-			};
+			List<Token> res = new List<Token>();
 
-			StringBuilder sb = new StringBuilder();
-
+			Token t = null;
+			StringBuilder sb = null;
 			bool doVerbatim = false;
 
 			if (mode == GetStringMode.Verbatim)
 			{
 				doVerbatim = true;
-				t.Type = TokenType.Verbatim;
 			}
 
 			char cur = '\0';
@@ -241,6 +236,45 @@ namespace PenguinSyntax.Parsing
 
 				if (!doVerbatim && cur == '\\' && this.escapableChars.ContainsKey(next))
 				{
+					this.globalposition++;
+					this.column++;
+					continue;
+				}
+
+				//
+				// open/close emphasis
+				//
+				else if (!doVerbatim && 
+					         (cur == '_' && next != ' ' && next != '\0')
+					         ||
+					         (cur == '_')
+				         )
+				{
+					// close the currently open token
+					if (t != null)
+					{
+						t.Content = sb.ToString();
+						res.Add(t);
+
+						// clear the buffer
+						sb = new StringBuilder();
+					}
+
+					// create emphasis token
+					t = new Token() {
+						Column = this.column,
+						LineNumber = this.linenumber,
+						Type = TokenType.Emphasis
+					};
+					res.Add(t);
+					t = null;
+
+					// end-of-source
+					if (this.globalposition == this.source.Length-1)
+					{
+						return res;
+					}
+
 					this.globalposition++;
 					this.column++;
 					continue;
@@ -261,8 +295,28 @@ namespace PenguinSyntax.Parsing
 						sb.Append(cur);
 					}
 
-					t.Content = sb.ToString();
-					return t;
+					if (t != null)
+					{
+						t.Content = sb.ToString();
+						res.Add(t);
+					}
+					return res;
+				}
+
+				if (t == null)
+				{
+					t = new Token() {
+						Column = this.column,
+						LineNumber = this.linenumber,
+						Type = TokenType.String
+					};
+
+					if (doVerbatim)
+					{
+						t.Type = TokenType.Verbatim;
+					}
+
+					sb = new StringBuilder();
 				}
 
 				sb.Append(cur);
