@@ -234,8 +234,10 @@ namespace PenguinSyntax.Parsing
 
 			char cur = '\0';
 			char next = '\0';
+			char prev = '\0';
 			while (this.globalposition < this.source.Length)
 			{
+				prev = cur;
 				cur = this.source[this.globalposition];
 				next = this.Lookahead();
 
@@ -251,13 +253,27 @@ namespace PenguinSyntax.Parsing
 				// open/close strong
 				//
 				else if (!doVerbatim && 
-					        (cur == '_' && next != ' ' && next != '\0')
-					        ||
-					        (cur == '_')
+				         	// allow opening of emphasis
+				         	// 1) on new lines
+				         	// 2) when the previous character is strong
+				         	// 3) when the next character is not a space
+					        (cur == '_' && (prev == ' ' || prev == '\0' || prev == '*') && next != ' ')
 				         	||
-				         	(cur == '*' && next != ' ' && next != '\0')
+				         	// allow closing of emphasis
+				         	// 1) after non-space character
+				         	// 2) before space, end-of-source and strong
+				         	(cur == '_' && prev != ' ' && (next == ' ' || next == '\0' || next == '*'))
 				         	||
-				         	(cur == '*')
+				         	// allow opening of strong
+				         	// 1) on new lines
+				         	// 2) when the previous character is emphasized
+				         	// 3) when the next character is not a space
+				         	(cur == '*' && (prev == ' ' || prev == '\0' || prev == '_') && next != ' ')
+				         	||
+				         	// allow closing of strong
+				         	// 1) after non-space character
+				         	// 2) before space, end-of-source and emphasis
+				         	(cur == '*' && prev != ' ' && (next == ' ' || next == '\0' || next == '_'))
 				         )
 				{
 					// close the currently open token
