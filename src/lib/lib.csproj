@@ -39,6 +39,7 @@
     <Compile Include="Parsing\GetStringMode.cs" />
     <Compile Include="SyntaxException.cs" />
     <Compile Include="Generation\HtmlEmitter.cs" />
+    <Compile Include="Extensions\IListExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -52,5 +53,6 @@
     <Folder Include="Properties\" />
     <Folder Include="Parsing\" />
     <Folder Include="Generation\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

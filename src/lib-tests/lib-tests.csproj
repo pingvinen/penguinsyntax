@@ -51,6 +51,7 @@
   <ItemGroup>
     <Folder Include="Parsing\" />
     <Folder Include="Generation\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Parsing\TokenTests.cs" />
@@ -70,5 +71,6 @@
     <Compile Include="Generation\StringTests.cs" />
     <Compile Include="Generation\CodeBlockTests.cs" />
     <Compile Include="Generation\ListTests.cs" />
+    <Compile Include="Extensions\IsPatternPresentTests.cs" />
   </ItemGroup>
 </Project>
